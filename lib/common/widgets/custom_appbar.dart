@@ -1,92 +1,61 @@
-import 'package:blockbuster/common/components/app_components.dart';
-import 'package:blockbuster/core/providers/appbar_provider.dart';
+import 'package:blockbuster/common/constants/colors.dart';
+import 'package:blockbuster/common/constants/images.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../utils/constants/colors_const.dart';
-import '../../utils/constants/image_const.dart';
-import '../../utils/constants/strings_const.dart';
-import 'appbar_item.dart';
+class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppbar(
+      {super.key,
+      this.titleWidget,
+      this.actionWidget,
+      this.useLeading,
+      this.leadingIcon,
+      this.onLeadingPressed});
 
-class CustomAppbar extends StatelessWidget {
-  const CustomAppbar({super.key, required this.appBarSection});
-
-  final Widget appBarSection;
+  final bool? useLeading;
+  final Widget? titleWidget;
+  final List<Widget>? actionWidget;
+  final IconData? leadingIcon;
+  final VoidCallback? onLeadingPressed;
 
   @override
   Widget build(BuildContext context) {
-
-    /*------------> Variables <-----------*/
     final screenSize = MediaQuery.of(context).size;
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-    final appbarProvider = Provider.of<AppbarProvider>(context);
-
-    /*-------------> Scaffold Screen <--------------*/
-    return CustomScrollView(
-      slivers: <Widget>[
-        /*---------------> Appbar <----------------*/
-        SliverAppBar(
-          backgroundColor: AppColorsConst.baseColor,
-          expandedHeight: screenSize.height,
-          title: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Row(
-              children: [
-                /*----------------> App Title & Subtitle <--------------*/
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(AppStringsConst.appTitle,
-                        style: textTheme.headlineLarge),
-                    Text(AppStringsConst.appSubTitle,
-                        style: textTheme.titleLarge),
-                  ],
-                ),
-                const SizedBox(width: 30),
-
-                /*-----------------> Appbar Items <-----------------*/
-                SizedBox(
-                  height: screenSize.height * .1,
-                  width: 600,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: AppComponents.appBarScreens.length,
-                    itemBuilder: (context, index) {
-                      final item = AppComponents.appBarScreens[index];
-                      return AppbarItem(item: item);
-                    },
-                  ),
-                ),
-
-                /*--------------> Appbar User Section <----------------*/
-                /*Expanded(
-                  child: ListView.builder(
-                    itemCount: ,
-                  ),
-                ),*/
-              ],
-            ),
-          ),
-
-          /*---------------> Appbar Background Image <---------------*/
-          flexibleSpace: FlexibleSpaceBar(
-            background: Opacity(
-                opacity: 0.2,
-                child: Image.asset(AppImageConst.bgImg, fit: BoxFit.cover)),
-
-          ),
+    final screenWidth = screenSize.width;
+    return Container(
+      height: screenSize.height * .2,
+      decoration: const BoxDecoration(
+        color: ColorConsts.bgColor,
+        image: DecorationImage(
+          image: AssetImage(ImagesConst.bgImg),
+          fit: BoxFit.cover,
+          opacity: 0.3,
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return appBarSection;
-            },
+      ),
+      child: Column(
+        children: [
+          AppBar(
+            automaticallyImplyLeading: false,
+            title: titleWidget,
+            centerTitle: false,
+            actions: actionWidget,
+            leading: useLeading!
+                ? IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back_ios_new),
+                  )
+                : leadingIcon != null
+                    ? IconButton(
+                        onPressed: onLeadingPressed, icon: Icon(leadingIcon))
+                    : null,
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight + 200);
 }

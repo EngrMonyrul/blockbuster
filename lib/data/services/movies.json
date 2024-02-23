@@ -1,0 +1,46 @@
+{
+  "name": "movies",
+  "success": "you are successfully get the data",
+  "movies": [
+    {
+      "name": "Tiger Nageshwar Rao",
+      "imdb": 6.1,
+      "released": {
+        "day": 20,
+        "month": 10,
+        "year": 2023
+      },
+      "region": "tallywood",
+      "languages": "tamil",
+      "types": [
+        "action",
+        "romantic",
+        "crime"
+      ],
+      "dubbed": {
+        "hindiDubbed": true,
+        "bengaliDubbed": false
+      },
+      "downloadLinks": {
+        "1080": {
+          "link": "https://techzed.info/view/mTgeg1QEy6",
+          "size": "2.9GB"
+        },
+        "720": {
+          "link": "https://techzed.info/view/ceZSRaGSZa",
+          "size": "1.5GB"
+        },
+        "480": {
+          "links": "https://techzed.info/view/emMARN3W26",
+          "size": "566MB"
+        }
+      },
+      "stars": [
+        "Ravi Teja",
+        "Anupam Kher",
+        "Gayatri Bhardwaj"
+      ],
+      "image": "https://image.tmdb.org/t/p/w600_and_h900_bestv2/3tiYpneYIvXfbaCE0brOoBjXP7v.jpg"
+    }
+  ]
+}
